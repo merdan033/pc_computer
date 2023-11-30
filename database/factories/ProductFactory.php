@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
 
@@ -20,14 +20,13 @@ class ProductFactory extends Factory
     {
         $user = DB::table('users')->inRandomOrder()->first();
         $category = DB::table('categories')->inRandomOrder()->first();
-        $brand = DB::table('brands')->inRandomOrder()->first();
-        $serie = DB::table('series')->inRandomOrder()->first();
+        $brand = Brand::inRandomOrder()->with('series')->first();
         $name = fake()->unique()->streetName();
         return [
             'user_id' => $user->id,
             'category_id' => $category->id,
             'brand_id' => $brand->id,
-            'serie_id' => $serie->id,
+            'serie_id' => $brand->series->count() > 0 ? $brand->series->random()->id : null,
             'name' => $name,
             'slug' => str($name)->slug(),
             'description' => fake()->paragraph(rand(3, 5)),
