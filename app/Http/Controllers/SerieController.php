@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Serie;
+use App\Models\Series;
 use Illuminate\Http\Request;
 
 class SerieController extends Controller
@@ -26,7 +26,7 @@ class SerieController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Serie $serie)
+    public function edit(Series $serie)
     {
         //
     }
@@ -34,7 +34,7 @@ class SerieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Serie $serie)
+    public function update(Request $request, Series $serie)
     {
         //
     }
@@ -42,7 +42,7 @@ class SerieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Serie $serie)
+    public function destroy(Series $serie)
     {
         //
     }

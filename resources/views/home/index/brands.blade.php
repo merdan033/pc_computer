@@ -6,8 +6,8 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-center p-2">
-                            <a href="{{ route('products.index', ['brand' => $brand->slug]) }}" class="stretched-link link-dark fw-semibold text-decoration-none">
-                                {{ $brand->name }}
+                            <a href="{{ route('products.index', ['serie' => $serie->slug]) }}" class="stretched-link link-dark fw-semibold text-decoration-none">
+                                {{ $brand->name }} ∙ {{ $serie->name }}
                                 <span class="badge bg-danger-subtle text-danger-emphasis">
                                     {{ $brand->products_count }}
                                 </span>

@@ -28,9 +28,9 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function serie(): BelongsTo
+    public function series(): BelongsTo
     {
-        return $this->belongsTo(Serie::class);
+        return $this->belongsTo(Series::class);
     }
 
     public function isNew()
@@ -47,6 +47,6 @@ class Product extends Model
 
     public function price()
     {
-        return round($this->price * (1 - $this->discount_percent / 100), 1);
+        return round($this->price * (1 - $this->discount_percent / 100), 1) - 1;
     }
 }

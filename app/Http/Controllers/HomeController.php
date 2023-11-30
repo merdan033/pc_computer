@@ -19,7 +19,7 @@ class HomeController extends Controller
             ->get();
 
         $discounts = Product::where('discount_percent', '>', 0)
-            ->with('category', 'brand', 'serie', 'user')
+            ->with('category', 'brand', 'series', 'user')
             ->inRandomOrder()
             ->take(12)
             ->get();

@@ -13,7 +13,7 @@ class Brand extends Model
 
     public function series(): HasMany
     {
-        return $this->hasMany(Serie::class)
+        return $this->hasMany(Series::class)
             ->orderBy('name');
     }
 

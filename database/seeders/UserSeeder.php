@@ -13,12 +13,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = ['Didar', 'Selim', 'Arslan'];
+        $users = ['Eziz', 'Daýanç', 'Ýusup', 'Selim', 'Arslan'];
 
         foreach ($users as $user) {
             User::create([
                 'name' => $user,
-                'username' => str($user)->lower(),
+                'username' => str($user)->slug(),
                 'password' =>bcrypt('somrthing'),
             ]);
         }
