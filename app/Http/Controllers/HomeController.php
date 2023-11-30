@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $categories = Category::withCount('products')
-            ->orderBy('name')
-            ->get();
-
         $brands = Brand::with(['series' => function ($query) {
             $query->withCount('products');
         }])
@@ -21,9 +17,18 @@ class HomeController extends Controller
             ->orderBy('products_count', 'desc')
             ->get();
 
-        return [
-            'categories' => $categories,
-            'brands' => $brands,
-        ];
+        $discounts = Product::where('discount_percent', '>', 0)
+            ->with('category', 'brand', 'serie', 'user')
+            ->inRandomOrder()
+            ->take(12)
+            ->get();
+
+
+
+        return view('home.index')
+            ->with([
+                'brands' => $brands,
+                'discounts' => $discounts,
+            ]);
     }
 }

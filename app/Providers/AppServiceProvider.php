@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\View;
+use Laravel\Sanctum\Sanctum;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +24,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrapFive();
+
+        Facades\View::composer('app.nav', function (View $view) {
+            $categories = Category::withCount('products')
+                ->orderBy('name')
+                ->get();
+
+            $view->with([
+                'categories' => $categories,
+            ]);
+        });
     }
 }
