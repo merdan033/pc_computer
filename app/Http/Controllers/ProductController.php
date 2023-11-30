@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -11,22 +13,51 @@ class ProductController extends Controller
     {
         $request->validate([
             'category' => 'nullable|string|max:255',
+            'brand' => 'nullable|string|max:255',
+            'serie' => 'nullable|string|max:255',
+
         ]);
 
-        $f_category = $request->category ?: null;
+        $f_category = $request->has('category') ? $request->category : null;
+        $f_brand = $request->has('brand') ? $request->brand : null;
+        $f_serie = $request->has('serie') ? $request->serie : null;
+
 
         $products = Product::when(isset($f_category), function ($query) use ($f_category) {
             $query->whereHas('category', function ($query) use ($f_category) {
                 $query->where('slug', $f_category);
             });
         })
+            ->when(isset($f_brand), function ($query) use ($f_brand) {
+                $query->whereHas('brand', function ($query) use ($f_brand) {
+                    $query->where('slug', $f_brand);
+                });
+            })
+            ->when(isset($f_serie), function ($query) use ($f_serie) {
+                $query->whereHas('serie', function ($query) use ($f_serie) {
+                    $query->where('slug', $f_serie);
+            });
+        })
             ->with('category', 'brand', 'serie', 'user')
             ->orderBy('id')
-            ->paginate(18);
+            ->paginate(18)
+            ->withQueryString();
+
+        $categories = Category::orderBy('name')
+            ->get();
+
+        $brands = Brand::with('series')
+            ->orderBy('name')
+            ->get();
 
         return view('products.index')
             ->with([
                 'products' => $products,
+                'categories' => $categories,
+                'brands' => $brands,
+                'f_category' => $f_category,
+                'f_brand' => $f_brand,
+                'f_serie' => $f_serie,
             ]);
     }
 

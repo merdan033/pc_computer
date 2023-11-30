@@ -12,6 +12,7 @@ class HomeController extends Controller
     {
         $brands = Brand::with(['series' => function ($query) {
             $query->withCount('products');
+            $query->orderBy('products_count', 'desc');
         }])
             ->withCount('products')
             ->orderBy('products_count', 'desc')
