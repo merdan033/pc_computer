@@ -31,7 +31,7 @@ class ProductFactory extends Factory
             'name' => $name,
             'slug' => str($name)->slug(),
             'description' => fake()->paragraph(rand(3, 5)),
-            'price' => fake()->randomFloat(2, 4, 30) * 1000 - 10,
+            'price' => fake()->randomFloat(2, 4, 30) * 1000 - 1,
             'discount_percent' =>fake()->randomNumber(2),
         ];
     }
